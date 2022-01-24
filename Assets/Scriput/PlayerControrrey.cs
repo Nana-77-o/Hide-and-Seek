@@ -10,8 +10,10 @@ public class PlayerControrrey : MonoBehaviour
     /// <summary>接地フラグ</summary>
     bool _isGrounded;
 
+
     void Start()
     {
+        
         _rb = GetComponent<Rigidbody>();
     }
 
@@ -26,7 +28,7 @@ public class PlayerControrrey : MonoBehaviour
         Vector3 dir = new Vector3(h, 0, v);
         dir = Camera.main.transform.TransformDirection(dir);
         dir.y = 0;
-
+        
         // キャラクターを「入力された方向」に向ける
         if (dir != Vector3.zero)
         {
