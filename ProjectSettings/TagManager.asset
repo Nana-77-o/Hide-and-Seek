@@ -11,6 +11,8 @@ TagManager:
   - button f2
   - button f1
   - button f6
+  - Radar
+  - Ivent
   layers:
   - Default
   - TransparentFX
@@ -22,9 +24,9 @@ TagManager:
   - 
   - Ivent
   - Door
-  - 
-  - 
-  - 
+  - Player
+  - Wall
+  - Item
   - 
   - 
   - 
