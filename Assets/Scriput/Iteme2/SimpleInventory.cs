@@ -6,13 +6,13 @@ using UnityEngine.UI;
 public class SimpleInventory : MonoBehaviour
 {
     /// <summary>アイコンのプレハブ</summary>
-    [SerializeField]GameObject iconPrefab = null;
+    [SerializeField] GameObject iconPrefab = null;
     /// <summary>アイコンのパネル</summary>
-    [SerializeField]Transform iconParent = null;
+    [SerializeField] Transform iconParent = null;
     /// <summary>アイテム</summary>
-    [SerializeField]InventoryItem[] items = null;
+    [SerializeField] InventoryItem[] items = null;
     /// <summary>アイテムを持ってるか</summary>
-    static public　bool[] itemFlags;
+    static public bool[] itemFlags;
     /// <summary>アイテムのアイコン管理のディクショナリ</summary>
     Dictionary<int, GameObject> icons = new Dictionary<int, GameObject>();
     void Start()

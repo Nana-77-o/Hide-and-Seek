@@ -19,7 +19,7 @@ public class ChengeScene : MonoBehaviourPunCallbacks
 
     public void SoloPlay()
     {
-        SceneManager.LoadScene("");
+        SceneManager.LoadScene("Singl");
     }
 
     public void DuoPlay()

@@ -17,20 +17,24 @@ public class PlayeIvent : MonoBehaviourPunCallbacks
     [SerializeField] Transform _muzzle = default;
     /// <summary>レーザーの射程距離</summary>
     [SerializeField] float _shootRange = 5f;
-    /// <summary>コンパスのObj</summary>
-    [SerializeField] GameObject _compas;
-    ///<summary>アイテム取得時にする</summary>
-    [SerializeField] UnityEvent _item = default;
     ///<summary>アイテムキャンバスObj</summary>
     [SerializeField] GameObject _itemeCanvas;
     ///<summary>レーダーキャンバスObj</summary>
     [SerializeField] GameObject _radarCanvas;
+    [SerializeField] Obtainable _radarObj; // 取得可能クラスのオブジェクト
+    [SerializeField] GameObject _radarImage;
+
+    /// <summary>メインカメラ</summary>
+    [SerializeField] GameObject _mineCam;
+    /// <summary>レーダーを使った時のカメラ</summary>
+    [SerializeField] GameObject _radarCam;
 
     private PhotonView _myPhotonView;
+    float _timer = 3.0f;
+    bool _timerBool = false;
     bool _itemCanvasB = false;
     bool _radarCanvasB = false;
-    bool[] _itemList;
-    int items = 0;
+    bool _itemGet;
     void Start()
     {
         // _myPhotonView = GetComponent<PhotonView>();
@@ -41,12 +45,11 @@ public class PlayeIvent : MonoBehaviourPunCallbacks
             //カーソルを画面中央にロックする
             Cursor.lockState = CursorLockMode.Locked;
         }
-        _itemList = SimpleInventory.itemFlags;
     }
 
     void Update()
     {
-       // if (_myPhotonView.IsMine)
+        //if (_myPhotonView.IsMine)
         {
             ItemLayer();
         }
@@ -57,11 +60,29 @@ public class PlayeIvent : MonoBehaviourPunCallbacks
             _radarCanvas.SetActive(false);
         }
         //レーダーを使った
-        if (Input.GetKeyDown(KeyCode.Q)&& _itemList[items])
+        if (Input.GetKeyDown(KeyCode.Q) && _itemGet)
         {
-            Debug.Log("れーだーを使った");
+            _radarImage.SetActive(false);
+            RadarUse();
+            _itemGet = false;
+            _timerBool = true;
         }
-        //隠れる場所を見つけた時
+        if (_timerBool)
+        {
+            _timer -= Time.deltaTime;
+            if (_timer < 0)
+            {
+                _mineCam.SetActive(true);
+                _radarCam.SetActive(false);
+                if (_timer < -1)
+                {
+                    _timerBool = false;
+                    _timer = 3.0f;
+
+                }
+            }
+        }
+        //隠れる時
         if (Input.GetKeyDown(KeyCode.E) && _itemCanvasB)
         {
 
@@ -107,13 +128,21 @@ public class PlayeIvent : MonoBehaviourPunCallbacks
     void RadarHit(Collider collider)
     {
         _radarCanvasB = true;
-        _item.Invoke();
         Destroy(collider.gameObject);
         Debug.Log("Radarは当たった");
+        _radarObj.Obtain(gameObject); // 取得メソッドを呼ぶ
+        _itemGet = Inventory._itemeGetFlag;
     }
     void IventHit(Collider collider)
     {
         _itemCanvasB = true;
         Debug.Log("Hideは当たった");
+    }
+
+    void RadarUse()
+    {
+        _mineCam.SetActive(false);
+        _radarCam.SetActive(true);
+        Debug.Log("れーだーを使った");
     }
 }

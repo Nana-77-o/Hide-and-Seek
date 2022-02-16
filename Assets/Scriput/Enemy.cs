@@ -5,7 +5,8 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] Transform target;
-    float speed;
+    [SerializeField] float speed;
+    [SerializeField] GameObject _lose;
 
     void Update()
     {
@@ -13,5 +14,16 @@ public class Enemy : MonoBehaviour
 
         //targetに向かって進む
         transform.position += transform.forward * speed;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "Player")
+        {
+            _lose.SetActive(true);
+            Cursor.visible = true;
+            // カーソルを画面内で動かせる
+            Cursor.lockState = CursorLockMode.Confined;
+        }
     }
 }

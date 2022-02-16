@@ -8,11 +8,16 @@ public class ItemManager : MonoBehaviour
 	[SerializeField] ItemDataBase itemDataBase;
 	/// <summary>アイテム数管理</summary>
 	private Dictionary<Item, int> numOfItem = new Dictionary<Item, int>();
+	static ItemManager instance;
 
-	// Use this for initialization
+	public static ItemManager GetInstance()
+	{
+		return instance;
+	}
+
 	void Start()
 	{
-
+		instance = this;
 		for (int i = 0; i < itemDataBase.GetItemLists().Count; i++)
 		{
 			//　アイテム数を適当に設定
@@ -20,14 +25,15 @@ public class ItemManager : MonoBehaviour
 			//　確認の為データ出力
 			Debug.Log(itemDataBase.GetItemLists()[i].GetItemName() + ": " + itemDataBase.GetItemLists()[i].GetInformation());
 		}
-
-		//Debug.Log(GetItem("ナイフ").GetInformation());
-		//Debug.Log(numOfItem[GetItem("ハーブ")]);
 	}
 
 	//　名前でアイテムを取得
 	public Item GetItem(string searchName)
 	{
 		return itemDataBase.GetItemLists().Find(itemName => itemName.GetItemName() == searchName);
+	}
+	public bool HasItem(string searchName)
+	{
+		return itemDataBase.GetItemLists().Exists(item => item.GetItemName() == searchName);
 	}
 }

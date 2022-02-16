@@ -12,6 +12,6 @@ EditorBuildSettings:
     path: Assets/Scenes/tutorial.unity
     guid: bf06cc53c16c8764abeac13123ce66ce
   - enabled: 1
-    path: Assets/Scenes/Duo.unity
-    guid: b1567bb0e00492a4abf19c34f5e2c802
+    path: Assets/Scenes/Singl.unity
+    guid: 7a929fd12b221164fba02f94bbdf628e
   m_configObjects: {}
